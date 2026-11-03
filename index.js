@@ -69,6 +69,7 @@ async function getHouseNordicStock() {
   url.searchParams.set("mode", "json");
 
   const data = await request(url);
+  console.log("API ATSAKYMAS:", JSON.stringify(data).slice(0, 2000));
 
   console.log("House Nordic atsakymo laukai:", Object.keys(data));
 console.log("Ar yra products masyvas:", Array.isArray(data.products));
