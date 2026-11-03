@@ -61,9 +61,16 @@ async function getHouseNordicStock() {
 
   const data = await request(url);
 
-  if (!Array.isArray(data.products) || data.products.length === 0) {
-    throw new Error("House Nordic negrąžino tinkamo prekių sąrašo.");
-  }
+  console.log("House Nordic atsakymo laukai:", Object.keys(data));
+console.log("Ar yra products masyvas:", Array.isArray(data.products));
+console.log("Gautų produktų skaičius:", data.products?.length ?? "nėra");
+
+if (!Array.isArray(data.products) || data.products.length === 0) {
+  throw new Error(
+    "Netinkamas House Nordic atsakymas: " +
+    JSON.stringify(data).slice(0, 1000)
+  );
+}
 
   const stockBySku = new Map();
 
