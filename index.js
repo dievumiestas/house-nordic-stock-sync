@@ -24,12 +24,21 @@ async function request(url, options = {}) {
   });
 
   const body = await response.text();
+  const contentType = response.headers.get("content-type");
 
   if (!response.ok) {
     throw new Error(`HTTP ${response.status}: ${body.slice(0, 500)}`);
   }
 
-  return JSON.parse(body);
+  try {
+    return JSON.parse(body);
+  } catch {
+    throw new Error(
+      `House Nordic atsakymas nėra JSON. ` +
+      `Content-Type: ${contentType}. ` +
+      `Atsakymo pradžia: ${body.slice(0, 500)}`
+    );
+  }
 }
 
 async function getShopifyToken() {
